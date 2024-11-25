@@ -51,15 +51,16 @@ if st.session_state.page == "Accueil":
     st.markdown("<h1 style='text-align: center; color: white;'>Bienvenue sur mon portfolio ! 🗂️</h1>", unsafe_allow_html=True)
     st.markdown("""
     <div style='text-align: center; color: white; font-size: 20px;'>
-    Passionné par l'analyse de données 📊, je suis un Data Analyst en reconversion professionnelle 🚀, avec une formation solide et une véritable envie de résoudre des problématiques complexes à l'aide de la donnée.
+    Passionné par l'analyse de données 📊, je suis un Data Analyst en reconversion, avec une formation solide et une réelle envie de résoudre des problématiques complexes grâce à la donnée.
 
-Au fil de mon parcours à la Wild Code School 🎓, j'ai acquis des compétences techniques en gestion, nettoyage, analyse et visualisation des données 🔍. Grâce à des outils comme Python, SQL et Power BI, j'ai appris à transformer des données brutes en informations exploitables 💡 et à créer des rapports interactifs pour prendre des décisions stratégiques 📈.
+Au cours de mon parcours à la Wild Code School 🎓, j'ai acquis des compétences techniques en gestion, nettoyage, analyse et visualisation des données. J'ai eu l'occasion de travailler avec des outils comme Python 🐍, SQL et Power BI pour transformer des données brutes en informations utiles, et créer des rapports interactifs pour aider à la prise de décision stratégique 📈.
 
-Dans ce portfolio, vous trouverez une sélection de projets qui démontrent ma capacité à analyser des datasets complexes 📉, à en extraire des insights pertinents 💬 et à créer des visualisations qui facilitent la compréhension des tendances et des performances 📊. Chaque projet reflète ma capacité à utiliser des outils modernes et à appliquer des méthodologies robustes pour résoudre des problèmes réels 🔧.
+Dans ce portfolio, vous trouverez une sélection de projets qui montrent ma capacité à analyser des datasets complexes, en extraire des insights pertinents 💡, et créer des visualisations claires pour mieux comprendre les tendances et les performances. Chaque projet reflète mon aptitude à utiliser des outils modernes et à appliquer des méthodologies solides pour résoudre des problèmes réels 🔧.
 
-Je suis actuellement à la recherche de nouvelles opportunités dans le domaine de la Data Analytics 🌟, où je pourrai continuer à développer mes compétences et contribuer à des projets stimulants ⚡.
+Je suis actuellement à la recherche de nouvelles opportunités dans la Data Analytics 🌟 et serais ravi d’échanger sur des projets intéressants.
 
-N'hésitez pas à explorer mes projets et à me contacter pour toute question ou collaboration 🤝! 
+N’hésitez pas à explorer mes projets et à me contacter si vous avez des questions ou souhaitez collaborer 🤝.
+
     </div>
     """, unsafe_allow_html=True)
 
