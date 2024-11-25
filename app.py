@@ -1,6 +1,6 @@
 import streamlit as st
-from portfolio.wcs.projet_1.wcs_projet1 import afficher_wcs_projet1
-from portfolio.wcs.projet_2.wcs_projet2 import afficher_wcs_projet2
+from wcs.projet_1.wcs_projet1 import afficher_wcs_projet1
+from wcs.projet_2.wcs_projet2 import afficher_wcs_projet2
 
 # Configuration de la page
 st.set_page_config(
