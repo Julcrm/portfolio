@@ -1,6 +1,5 @@
 def afficher_wcs_projet1():
     import streamlit as st
-    import time
     from streamlit_carousel import carousel
 
     # Titre + expliaction projet
