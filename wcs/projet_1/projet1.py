@@ -198,8 +198,8 @@ def afficher_wcs_projet1():
         dict(
             title="",
             text="",
-        img="wcs/projet_1/ressources/page2.png"
-        ),
+            img="wcs/projet_1/ressources/page2.png"
+            ),
         dict(
             title="",
             text="",
@@ -209,7 +209,7 @@ def afficher_wcs_projet1():
             title="",
             text="",
             img="wcs/projet_1/ressources/page4.png"
-        ),
+            ),
 
         ]
 
