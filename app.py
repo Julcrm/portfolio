@@ -59,9 +59,7 @@ Dans ce portfolio, vous trouverez une sélection de projets qui montrent ma capa
 
 Je suis actuellement à la recherche de nouvelles opportunités dans la Data Analytics 🌟 et serais ravi d’échanger sur des projets intéressants.
 
-N’hésitez pas à explorer mes projets et à me contacter si vous avez des questions ou souhaitez collaborer 🤝.
-
-    </div>
+N’hésitez pas à explorer mes projets et à me contacter si vous avez des questions ou souhaitez collaborer 🤝.</div>
     """, unsafe_allow_html=True)
 
 elif st.session_state.page == "wcs_projet1":
