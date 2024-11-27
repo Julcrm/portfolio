@@ -47,10 +47,9 @@ with st.sidebar:
             set_page("Accueil")
 
     with col2:
-        if st.button("Contact 📩"):
-            with st.sidebar:
-                st.text_input("What's your name?")
-                st.markdown("Hello World 👋")
+        with st.popover("Contact 📩", use_container_width = True):
+            st.link_button("Linkedin 🔗", "www.linkedin.com/in/julien-castellano")
+            st.link_button("Mail 📬", "mailto:julien.crm@gmail.com")
 
     # Les autres éléments (boutons et textes) restent en affichage vertical
     st.markdown("""
