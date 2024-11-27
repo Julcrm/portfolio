@@ -48,7 +48,7 @@ with st.sidebar:
 
     with col2:
         with st.popover("Contact 📩", use_container_width = True):
-            st.link_button("Linkedin 🔗", "www.linkedin.com/in/julien-castellano")
+            st.link_button("Linkedin 🔗", "https://www.linkedin.com/in/julien-castellano")
             st.link_button("Mail 📬", "mailto:julien.crm@gmail.com")
 
     # Les autres éléments (boutons et textes) restent en affichage vertical
