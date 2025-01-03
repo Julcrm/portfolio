@@ -1,6 +1,8 @@
 import streamlit as st
-from wcs.projet_1.projet1 import afficher_wcs_projet1
-from wcs.projet_2.projet2 import afficher_wcs_projet2
+from wcs.projet_1.wcs_projet1 import afficher_wcs_projet1
+from wcs.projet_2.wcs_projet2 import afficher_wcs_projet2
+from wcs.projet_3.wcs_projet3 import afficher_wcs_projet3
+from perso.climbing.climbing import afficher_climbing
 
 # Configuration de la page
 st.set_page_config(
@@ -55,13 +57,19 @@ with st.sidebar:
     st.markdown("""
     ### Projets réalisés à la Wild Code School <img src='https://help.wildcodeschool.com/hubfs/markentive/favicons/global/android-chrome-256x256.png' width='25' height='25'>""", 
     unsafe_allow_html=True)
-    if st.button("Projet 1 - SQL/Power BI 📊"):
+    if st.button("Toys & Models 📊"):
         set_page("wcs_projet1")
-    if st.button("Projet 2 - Python/Pandas/Seaborn 🐍"):
+    if st.button("Recommandation Films 🍿"):
         set_page("wcs_projet2")
+    if st.button("Projet 3 - En cours 🚧"):
+        set_page("wcs_projet3")
     st.markdown("""
     ### Projets personnels  <img src='https://cdn-icons-png.flaticon.com/512/6140/6140802.png' width='25' height='25'>""", 
     unsafe_allow_html=True)
+    if st.button("Climbing - En cours 🧗"):
+        set_page("climbing")
+
+
 
 # Affichage page d'accueil
 if st.session_state.page == "Accueil":
@@ -96,9 +104,18 @@ if st.session_state.page == "Accueil":
 
 
 elif st.session_state.page == "wcs_projet1":
-    # SQL/Power BI
+    # Toys & Models
     afficher_wcs_projet1()
 
 elif st.session_state.page == "wcs_projet2":
-    # Python/Pandas/Seaborn
+    # Recommandation de films
     afficher_wcs_projet2()
+
+elif st.session_state.page == "wcs_projet3":
+    # En cours
+    afficher_wcs_projet3()
+
+elif st.session_state.page == "climbing":
+    # En cours
+    afficher_climbing()
+
