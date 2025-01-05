@@ -5,6 +5,10 @@ def afficher_wcs_projet1():
     # Titre + expliaction projet
     st.markdown("<h1 style='text-align: center; color: white;'>Projet 1 : Analyse de données avec MySQL et Power BI</h1>", unsafe_allow_html=True)
 
+    #Espace
+    st.write("")
+    st.write("")
+
     st.markdown("""
     <div style='text-align: center; color: white; font-size: 20px;'>
     Dans ce projet, j'ai travaillé sur l'analyse de données provenant d'une base de données MySQL 📊.  
@@ -12,14 +16,27 @@ def afficher_wcs_projet1():
     </div>
     """, unsafe_allow_html=True)
 
+    #Espace
+    st.write("")
+    st.write("")
+
     # Explication projet
     st.markdown("""
     ## 🔍 Étapes réalisées :
+    """)
 
+    #Espace
+    st.write("")
+    st.write("")
+
+    st.markdown("""
     ### 1️⃣ Requête SQL 💻 :
     - Extraction des données pertinentes à l'aide de requêtes SQL.
     - Utilisation de jointures, agrégations et filtres pour répondre aux besoins spécifiques.
     """)
+
+    #Espace
+    st.write("")
 
     # Selectbox pour afficher les requête SQL
     section = st.selectbox(" ", ["Choisissez une requête SQL",
