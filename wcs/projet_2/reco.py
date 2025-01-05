@@ -15,7 +15,7 @@ def afficher_reco():
 
     @st.cache_data
     def get_poster():
-        return pd.read_parquet(url + df_poster_id)
+        return pd.read_parquet("/data/poster.parquet")
     
     @st.cache_data
     def get_reco():
