@@ -3,6 +3,17 @@ from wcs.projet_1.wcs_projet1 import afficher_wcs_projet1
 from wcs.projet_2.wcs_projet2 import afficher_wcs_projet2
 from wcs.projet_3.wcs_projet3 import afficher_wcs_projet3
 from perso.climbing.climbing import afficher_climbing
+import shutil
+
+# Chemin vers le répertoire du volume monté
+volume_path = './data'  # Remplace par le chemin spécifique de ton volume
+
+# Le chemin local de ton fichier CSV
+local_file_path = 'poster.parquet'  # Remplace par le chemin local de ton fichier CSV
+
+# Copier le fichier CSV dans le volume
+shutil.copy(local_file_path, volume_path)
+print(f"Le fichier {local_file_path} a été copié dans {volume_path}")
 
 # Configuration de la page
 st.set_page_config(
@@ -38,6 +49,7 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
 
 # Menu de navigation dans la sidebar
 with st.sidebar:
