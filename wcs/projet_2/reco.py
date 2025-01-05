@@ -3,6 +3,7 @@ def afficher_reco():
     import pandas as pd
     import re
     import requests
+    import os
 
     # ID du fichier Google Drive
     df_poster_id = '1AvzyoeBvwpNQlssF71PG8Ikr6QlpNSYV'
@@ -167,7 +168,8 @@ def afficher_reco():
 
     if user_query:  # Assurer que user_query n'est pas vide
         url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
-        api_key = st.secrets["api"]
+        api_key = os.getenv('api')
+
         payload = {
             "contents": [
                 {
