@@ -14,22 +14,22 @@ def afficher_reco():
     # Lien téléchargeable
     url = "https://drive.google.com/uc?id="
 
-    cache = Cache("/tmp/cache_dir")
+    cache = Cache("/data")
 
     if "df_poster" not in cache:
         cache["df_poster"] = pd.read_parquet(url + df_poster_id)
-    else:
-        df_poster = cache["df_poster"]
-    
-    if "df_poster" not in cache:
-        cache["df_reco"] = pd.read_parquet(url + df_reco_id)
-    else:
-        df_reco = cache["df_reco"]
 
-    if "df_poster" not in cache:
-        cache["df_gemini"] = pd.read_parquet(url + df_gemini_id)
-    else:
-        df_gemini = cache["df_gemini"]
+    df_poster = cache["df_poster"]
+    
+    if "df_reco" not in cache:
+        cache["df_reco"] = pd.read_parquet(url + df_reco_id)
+    
+    df_reco = cache["df_reco"]
+
+    if "df_gemini" not in cache:
+        cache["df_gemini"] = pd.read_csv(url + df_gemini_id)
+ 
+    df_gemini = cache["df_gemini"]
 
 
     st.markdown("""
