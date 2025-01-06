@@ -3,6 +3,7 @@ def afficher_reco():
     import pandas as pd
     import re
     import requests
+    import os
     from diskcache import Cache
 
     
