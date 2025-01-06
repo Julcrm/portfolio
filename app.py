@@ -3,6 +3,9 @@ from wcs.projet_1.wcs_projet1 import afficher_wcs_projet1
 from wcs.projet_2.wcs_projet2 import afficher_wcs_projet2
 from wcs.projet_3.wcs_projet3 import afficher_wcs_projet3
 from perso.climbing.climbing import afficher_climbing
+import os
+
+
 
 # Configuration de la page
 st.set_page_config(
@@ -117,6 +120,7 @@ elif st.session_state.page == "wcs_projet3":
     afficher_wcs_projet3()
 
 elif st.session_state.page == "climbing":
-    # En cours
+    # Climlbing
     afficher_climbing()
+
 

@@ -18,17 +18,14 @@ def afficher_reco():
 
     if "df_poster" not in cache:
         cache["df_poster"] = pd.read_parquet(url + df_poster_id)
-
     df_poster = cache["df_poster"]
     
     if "df_reco" not in cache:
         cache["df_reco"] = pd.read_parquet(url + df_reco_id)
-    
     df_reco = cache["df_reco"]
 
     if "df_gemini" not in cache:
         cache["df_gemini"] = pd.read_csv(url + df_gemini_id)
- 
     df_gemini = cache["df_gemini"]
 
 

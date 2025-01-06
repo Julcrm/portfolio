@@ -3,6 +3,7 @@ def afficher_viz():
     import streamlit as st
     import pandas as pd
     import plotly.express as px
+    from diskcache import Cache
     
     # ID du fichier Google Drive
     df_top_pays_id = '13ZGjbFR2_qjOic_hzU4JQvkMvuJ2pfB4'
@@ -13,27 +14,24 @@ def afficher_viz():
     # Lien téléchargeable
     url = "https://drive.google.com/uc?id="
 
-    @st.cache_data
-    def get_top_pays():
-        return pd.read_csv(url + df_top_pays_id)
+    cache = Cache("/data")
+
+    if "df_top_pays" not in cache:
+        cache["df_top_pays"] = pd.read_parquet(url + df_top_pays_id)
+    df_top_pays = cache["df_top_pays"]
     
-    @st.cache_data
-    def get_time():
-        return pd.read_csv(url + df_time_id)
-    
-    @st.cache_data
-    def get_pop_note():
-        return pd.read_csv(url + df_pop_note_id)
-    
-    @st.cache_data
-    def get_real():
-        return pd.read_csv(url + df_real_id)
-    
-    # Chargement des données depuis des fichiers CSV
-    df_top_pays = get_top_pays()
-    df_time = get_time()
-    df_pop_note = get_pop_note()
-    df_real = get_real()
+    if "df_time" not in cache:
+        cache["df_time"] = pd.read_parquet(url + df_time_id)
+    df_time = cache["df_time"]
+
+    if "df_pop_note" not in cache:
+        cache["df_pop_note"] = pd.read_csv(url + df_pop_note_id)
+    df_pop_note = cache["df_pop_note"]
+
+    if "df_real" not in cache:
+        cache["df_real"] = pd.read_csv(url + df_real_id)
+    df_real = cache["df_real"]
+
 
     # Disposition des colonnes pour l'affichage avec Streamlit
     col1, col2 = st.columns([1, 1])

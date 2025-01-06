@@ -35,8 +35,6 @@ def afficher_wcs_projet1():
     - Utilisation de jointures, agrégations et filtres pour répondre aux besoins spécifiques.
     """)
 
-    #Espace
-    st.write("")
 
     # Selectbox pour afficher les requête SQL
     section = st.selectbox(" ", ["Choisissez une requête SQL",
@@ -187,22 +185,39 @@ def afficher_wcs_projet1():
             c.country, annee, mois, dateID;
         """, language='sql')
 
-
+    #Espace
+    st.write("")
+    st.write("")
             
     st.markdown("""
         ### 2️⃣ Calcul des KPI 📈 :
         - Calcul des indicateurs de performance (KPI) comme :  
         - **Chiffre d'affaires.**  
-        - **Croissance des ventes.**  
+        - **Croissance des ventes.**
+                """)
+        
+    #Espace
+    st.write("")
+    st.write("")
 
+    st.markdown("""
         ### 3️⃣ Création du Dashboard Power BI 🎨 :
         - Développement d'un tableau de bord interactif pour visualiser les KPIs.
         - Utilisation de graphiques dynamiques pour faciliter la prise de décision stratégique.
+        """)
 
+        #Espace
+    st.write("")
+    st.write("")
+
+    st.markdown("""
         ## 💡 Résultat :
         Un tableau de bord clair et efficace, permettant à l'entreprise de mieux comprendre ses performances et d'identifier des axes d'amélioration.
         """)
 
+    #Espace
+    st.write("")
+    st.write("")
 
     # Carousel images power BI
     test_items = [
