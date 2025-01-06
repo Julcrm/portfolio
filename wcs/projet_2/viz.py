@@ -5,7 +5,7 @@ def afficher_viz():
     import plotly.express as px
     
     # ID du fichier Google Drive
-    #df_top_pays_id = '13ZGjbFR2_qjOic_hzU4JQvkMvuJ2pfB4'
+    df_top_pays_id = '13ZGjbFR2_qjOic_hzU4JQvkMvuJ2pfB4'
     df_time_id = '1npUK9DA-EZEbueW8RT-WZIPhlEuxtC7P'
     df_pop_note_id = '1E-jCLT4Ez5X9suxB-AOY597QDpHoR4SP'
     df_real_id = '1qHDuLSY8ZZ-JOTK1jOMgNahVSqjm_JT3'
@@ -15,7 +15,7 @@ def afficher_viz():
 
     @st.cache_data
     def get_top_pays():
-        return pd.read_csv("./data")
+        return pd.read_csv(url + df_top_pays_id)
     
     @st.cache_data
     def get_time():
