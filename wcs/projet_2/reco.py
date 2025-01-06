@@ -3,8 +3,9 @@ def afficher_reco():
     import pandas as pd
     import re
     import requests
+    from diskcache import Cache
 
-
+    
     # ID du fichier Google Drive
     df_poster_id = '1AvzyoeBvwpNQlssF71PG8Ikr6QlpNSYV'
     df_reco_id = '1nHKijrPb-e_r8-5CSXFbiso44lIovARD'
@@ -13,21 +14,23 @@ def afficher_reco():
     # Lien téléchargeable
     url = "https://drive.google.com/uc?id="
 
-    @st.cache_data
-    def get_poster():
-        return pd.read_parquet("/data/poster.parquet")
+    cache = Cache("/tmp/cache_dir")
+
+    if "df_poster" not in cache:
+        cache["df_poster"] = pd.read_parquet(url + df_poster_id)
+    else:
+        df_poster = cache["df_poster"]
     
-    @st.cache_data
-    def get_reco():
-        return pd.read_parquet(url + df_reco_id)
-    
-    @st.cache_data
-    def get_gemini():
-        return pd.read_csv(url + df_gemini_id)
-    
-    df_poster = get_poster()
-    df_reco = get_reco()
-    df_gemini = get_gemini()
+    if "df_poster" not in cache:
+        cache["df_reco"] = pd.read_parquet(url + df_reco_id)
+    else:
+        df_reco = cache["df_reco"]
+
+    if "df_poster" not in cache:
+        cache["df_gemini"] = pd.read_parquet(url + df_gemini_id)
+    else:
+        df_gemini = cache["df_gemini"]
+
 
     st.markdown("""
         <style>

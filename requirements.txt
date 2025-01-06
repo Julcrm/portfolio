@@ -3,3 +3,4 @@ streamlit-carousel
 pandas
 plotly.express
 requests
+diskcache
