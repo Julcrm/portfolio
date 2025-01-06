@@ -17,11 +17,11 @@ def afficher_viz():
     cache = Cache("/data")
 
     if "df_top_pays" not in cache:
-        cache["df_top_pays"] = pd.read_parquet(url + df_top_pays_id)
+        cache["df_top_pays"] = pd.read_csv(url + df_top_pays_id)
     df_top_pays = cache["df_top_pays"]
     
     if "df_time" not in cache:
-        cache["df_time"] = pd.read_parquet(url + df_time_id)
+        cache["df_time"] = pd.read_csv(url + df_time_id)
     df_time = cache["df_time"]
 
     if "df_pop_note" not in cache:
