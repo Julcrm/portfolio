@@ -4,6 +4,23 @@ from wcs.projet_2.wcs_projet2 import afficher_wcs_projet2
 from wcs.projet_3.wcs_projet3 import afficher_wcs_projet3
 from perso.climbing.climbing import afficher_climbing
 
+import os
+import shutil
+
+# Chemin du fichier source
+source_file = 'poster.parquet'
+
+# Chemin du répertoire cible
+destination_dir = '/data'
+destination_file = os.path.join(destination_dir, os.path.basename(source_file))
+
+# Copier le fichier vers le répertoire cible
+try:
+    shutil.copy(source_file, destination_file)
+    print(f"Fichier copié avec succès vers {destination_file}")
+except Exception as e:
+    print(f"Erreur lors de la copie du fichier : {e}")
+
 # Configuration de la page
 st.set_page_config(
     page_title="Portfolio - Julien Castellano",

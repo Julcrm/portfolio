@@ -3,7 +3,7 @@ def afficher_reco():
     import pandas as pd
     import re
     import requests
-    import os
+
 
     # ID du fichier Google Drive
     df_poster_id = '1AvzyoeBvwpNQlssF71PG8Ikr6QlpNSYV'
@@ -15,7 +15,7 @@ def afficher_reco():
 
     @st.cache_data
     def get_poster():
-        return pd.read_parquet(url + df_poster)
+        return pd.read_parquet("/data/poster.parquet")
     
     @st.cache_data
     def get_reco():
