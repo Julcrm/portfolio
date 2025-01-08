@@ -6,6 +6,12 @@ def afficher_reco():
     import os
     from diskcache import Cache
 
+    file_to_delete = "/data/reco.parquet"
+    if os.path.exists(file_to_delete):
+        os.remove(file_to_delete)  # Supprime le fichier
+        print(f"Fichier supprimé : {file_to_delete}")
+    else:
+        print(f"Le fichier {file_to_delete} n'existe pas.")
     
     # ID du fichier Google Drive
     df_poster_id = '1AvzyoeBvwpNQlssF71PG8Ikr6QlpNSYV'
