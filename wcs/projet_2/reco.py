@@ -6,7 +6,7 @@ def afficher_reco():
     import os
     from diskcache import Cache
 
-    file_to_delete = "/data/reco.parquet"
+    file_to_delete = "/data/df_reco.parquet"
     if os.path.exists(file_to_delete):
         os.remove(file_to_delete)  # Supprime le fichier
         print(f"Fichier supprimé : {file_to_delete}")
