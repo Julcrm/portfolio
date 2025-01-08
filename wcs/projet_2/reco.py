@@ -6,16 +6,10 @@ def afficher_reco():
     import os
     from diskcache import Cache
 
-    file_to_delete = "/data/df_reco"
-    if os.path.exists(file_to_delete):
-        os.remove(file_to_delete)  # Supprime le fichier
-        print(f"Fichier supprimé : {file_to_delete}")
-    else:
-        print(f"Le fichier {file_to_delete} n'existe pas.")
     
     # ID du fichier Google Drive
     df_poster_id = '1AvzyoeBvwpNQlssF71PG8Ikr6QlpNSYV'
-    df_reco_final_id = "1nHKijrPb-e_r8-5CSXFbiso44lIovARD"
+    df_reco_id = "1nHKijrPb-e_r8-5CSXFbiso44lIovARD"
     df_gemini_id = '1eVlcDdtSJen9IEo_MvIvKz3McBQQ1Ns_'
 
     # Lien téléchargeable
@@ -27,9 +21,9 @@ def afficher_reco():
         cache["df_poster"] = pd.read_parquet(url + df_poster_id)
     df_poster = cache["df_poster"]
     
-    if "df_reco_final" not in cache:
-        cache["df_reco_final"] = pd.read_parquet(url + df_reco_final_id)
-    df_reco = cache["df_reco_final"]
+    if "df_reco" not in cache:
+        cache["df_reco"] = pd.read_parquet(url + df_reco_id)
+    df_reco = cache["df_reco"]
 
     if "df_gemini" not in cache:
         cache["df_gemini"] = pd.read_csv(url + df_gemini_id)
