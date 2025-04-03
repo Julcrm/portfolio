@@ -78,32 +78,33 @@ with st.sidebar:
 if st.session_state.page == "Accueil":
     # Page d'accueil
     st.markdown("<h1 style='text-align: center; color: white;'>Bienvenue sur mon portfolio ! 🗂️</h1>", unsafe_allow_html=True)
-    
+
     st.markdown("""
-    <div style='text-align: center; color: white; font-size: 20px;'>
-    
-    <p>Je suis <strong>Julien Castellano</strong>, un <strong>Data Analyst Junior</strong> passionné par l'analyse de données et la résolution de problématiques grâce à l'intelligence des données . Après une carrière de 8 ans dans les télécoms , j'ai décidé de me réorienter vers l'analyse de données, un domaine qui me permet de combiner ma rigueur analytique et mon enthousiasme pour la prise de décision éclairée.</p>
-    
-    <p>Actuellement en formation à la <strong>Wild Code School</strong> , je développe mes compétences pour obtenir une licence en <strong>Data Analytics</strong>. Mon objectif est d'utiliser les données pour apporter des solutions concrètes et pertinentes aux entreprises.</p>
-    
-    <p><strong>Mes compétences :</strong></p>
-    <ul style='text-align: left; margin-left: 20%;'>
-        <li><strong>SQL 🗄️ :</strong> Gestion de bases de données et interrogations pour extraire des insights.</li>
-        <li><strong>Python 🐍 :</strong> Programmation pour l'analyse et la manipulation des données.</li>
-        <li><strong>Power BI & Tableau 📊 :</strong> Création de visualisations interactives pour des prises de décision éclairées.</li>
-        <li><strong>Nettoyage et préparation des données 🧹 :</strong> Transformation des données brutes en informations exploitables.</li>
-        <li><strong>Analyse statistique 📈 :</strong> Extraction de tendances et analyses prédictives pour guider la stratégie.</li>
-    </ul>
+            <div style='text-align: center; color: white; font-size: 20px;'>
 
-    <p><strong>Ce que vous trouverez sur ce portfolio :</strong></p>
-    <ul style='text-align: left; margin-left: 20%;'>
-        <li><strong>Projets à la Wild Code School 🎓 :</strong> Divers projets analytiques, dont la création de dashboards interactifs avec Power BI, l'analyse de données à l'aide de Python, et la mise en œuvre de solutions de nettoyage et de préparation des données pour des cas réels.</li>
-        <li><strong>Projets personnels 💡 :</strong> Développement de projets pour approfondir mes compétences, tels que la visualisation des données, la manipulation de grands jeux de données, et l'application de modèles prédictifs avec Python pour des problématiques réelles.</li>
-    </ul>
+            <p>Je suis <strong>Julien Castellano</strong>, un <strong>Data Analyst Junior</strong> passionné par la donnée et son potentiel. Après une carrière de 8 ans dans les télécoms, j’ai fait le choix de me reconvertir dans la <strong>Data</strong> et l’<strong>Intelligence Artificielle</strong>.</p>
 
-    <p>Si vous êtes à la recherche d'un <strong>Data Analyst Junior</strong> déterminé à apporter une réelle valeur ajoutée à votre entreprise, je vous invite à explorer mon portfolio et à me contacter pour échanger sur les opportunités à venir 📩.</p>
-    </div>
-    """, unsafe_allow_html=True)
+            <p>Récemment diplômé d’une <strong>licence en Data Analytics</strong> à la <strong>Wild Code School</strong>, je poursuis désormais mon évolution en me spécialisant en <strong>Data Engineering</strong>, avec l’ambition d’intégrer un <strong>Master en Data & IA</strong>. Mon objectif est de concevoir et optimiser des architectures de données afin de rendre les infrastructures plus performantes et scalables.</p>
+
+            <p><strong>Mes compétences :</strong></p>
+            <ul style='text-align: left; margin-left: 20%;'>
+                <li><strong>SQL 🗄️ :</strong> Optimisation et gestion de bases de données relationnelles.</li>
+                <li><strong>Python 🐍 :</strong> Manipulation de données, automatisation et développement d’algorithmes.</li>
+                <li><strong>Big Data & Cloud ☁️ :</strong> Exploration des technologies comme Spark, Airflow et les bases de données distribuées.</li>
+                <li><strong>Power BI & Tableau 📊 :</strong> Création de dashboards interactifs pour des analyses stratégiques.</li>
+                <li><strong>ETL & Data Pipelines 🔄 :</strong> Conception et automatisation des flux de données.</li>
+            </ul>
+
+            <p><strong>Ce que vous trouverez sur ce portfolio :</strong></p>
+            <ul style='text-align: left; margin-left: 20%;'>
+                <li><strong>Projets réalisés 🚀 :</strong> Analyses de données, création de dashboards interactifs, développement d’automatisations et mise en place de workflows d’ingestion et transformation de données.</li>
+                <li><strong>Projets personnels 💡 :</strong> Développement de projets pour approfondir mes compétences, tels que la visualisation des données, la manipulation de grands jeux de données, et l'application de modèles prédictifs avec Python pour des problématiques réelles.</li>
+            </ul>
+
+            <p>Si vous recherchez un profil passionné et motivé dans l’univers de la <strong>Data & IA</strong>, je vous invite à explorer mon portfolio et à me contacter pour échanger sur de futures opportunités 📩.</p>
+
+            </div>
+            """, unsafe_allow_html=True)
 
 
 elif st.session_state.page == "wcs_projet1":
