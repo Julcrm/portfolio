@@ -141,7 +141,7 @@ def afficher_wcs_projet3():
                     if st.button(icon):
                         if "history" not in st.session_state:
                             st.session_state["history"] = []
-                        df_resto = sql_user.listing_resto(st.session_state['user_id'][1])
+                        df_resto = sql_user.listing_resto(12)
                         category_counts = df_resto['Catégorie'].value_counts()
                         df_favorite = pd.DataFrame(category_counts).reset_index()
                         adresse = mage_local.gps_to_address_google(user_lat, user_lon)
