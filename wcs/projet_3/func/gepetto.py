@@ -6,7 +6,7 @@ import streamlit
 
 class Robot_bistro:
     def __init__(self, name_model="gemini-1.5-flash", temperature=1):
-        self.api_key = os.getenv('api_bot')
+        self.api_key = os.getenv('api')
         self.model = None
         self.name_model = name_model
         self.temperature = temperature

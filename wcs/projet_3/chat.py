@@ -23,10 +23,6 @@ def chatbot():
     # Dès que l'utilisateur est authentifié, forcer l'affichage du chatbot et mettre à jour les clés héritées
     if st.session_state.get("authenticated"):
         st.session_state["current_page"] = "chat"
-        st.session_state["page_projet3"] = "chat"
-        if st.session_state.get("page") == "wcs_projet3":
-            st.session_state["page"] = "chat"
-
     API_KEY = os.getenv('api_google')
 
     if st.session_state.get("current_page") == "chat":
@@ -129,20 +125,6 @@ def chatbot():
                 st.session_state["current_step"] = "🍽️ Trouve ton resto idéal"
                 st.rerun()
 
-            def get_resized_image(photo_reference, size=(200, 200)):
-                default_img = Image.open("wcs/projet_3/img/icons8-robot-100.png").resize((200, 200))
-                image_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="
-                if not photo_reference:
-                    return default_img
-                try:
-                    img_url = f"{image_url}{photo_reference}&key={API_KEY}"
-                    response = requests.get(img_url)
-                    if response.status_code == 200:
-                        img = Image.open(BytesIO(response.content)).resize(size)
-                        return img
-                except Exception:
-                    pass
-                return default_img
 
 if __name__ == '__main__':
     chatbot()
