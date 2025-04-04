@@ -20,72 +20,48 @@ def chatbot():
     mage_local = Mage_local()
     sql_user = SQL_user()
 
-    # Dès que l'utilisateur est authentifié, forcer l'affichage du chatbot et mettre à jour les clés héritées
     if st.session_state.get("authenticated"):
         st.session_state["current_page"] = "chat"
-    API_KEY = os.getenv('api')
+        st.session_state["page_projet3"] = "chat"
+        if st.session_state.get("page") == "wcs_projet3":
+            st.session_state["page"] = "chat"
 
-    if st.session_state.page == "chat":
+    API_KEY = os.getenv('api_google')
 
-        # Initialisation de l'étape courante dans session_state si elle n'existe pas
+    if st.session_state.get("current_page") == "chat":
+        # Initialisation de l'étape du chatbot
         if "current_step" not in st.session_state:
             st.session_state["current_step"] = "🤖 Discute avec Robot bistro"
 
-        if 'dico' not in st.session_state:
-            st.session_state.dico = dict()
+        # Initialisation des variables nécessaires
+        st.session_state.setdefault('dico', dict())
+        st.session_state.setdefault("has_moved_to_step_2", False)
 
-        if "has_moved_to_step_2" not in st.session_state:
-            st.session_state["has_moved_to_step_2"] = False
-
-        # Fonction pour ajouter un message et générer une réponse avec contexte
+        # Fonction d'ajout de message et génération de réponse
         def addtext():
-            user_input = st.session_state["prompt"]  # Récupère le message utilisateur
+            user_input = st.session_state.get("prompt", "")
             if user_input:
-                # Ajoute le message utilisateur à l'historique
-                st.session_state.messages.append({"role": "user", "text": user_input})
-
-                # Stockage temporaire des réponses utilisateur (tous les messages de type 'user')
-                st.session_state["history"] = []
-                for message in st.session_state.messages:
-                    if message["role"] == "user":
-                        st.session_state["history"].append(message["text"])
-
-            # Crée un contexte pour le chatbot en concaténant les anciens messages
-            context = "\n".join([msg["text"] for msg in st.session_state.messages])
-
-            # Obtenir la réponse du bot en lui donnant le contexte
+                st.session_state.setdefault("messages", []).append({"role": "user", "text": user_input})
+                st.session_state["history"] = [msg["text"] for msg in st.session_state["messages"] if
+                                               msg["role"] == "user"]
+            context = "\n".join([msg["text"] for msg in st.session_state.get("messages", [])])
             response_bot = st.session_state["robot"].talk(context)
+            st.session_state["messages"].append({"role": "assistant", "text": response_bot})
 
-            # Ajoute la réponse du bot à l'historique
-            st.session_state.messages.append({"role": "assistant", "text": response_bot})
-
+        # Affichage de la première étape du chatbot
         if st.session_state["current_step"] == "🤖 Discute avec Robot bistro":
-
-            # Liste des étapes
             options_1 = ["🤖 Discute avec Robot bistro"]
-
-            # Affichage des étapes avec st.pills
             selection_1 = st.pills("Les étapes :", options_1, selection_mode="single",
                                    default=st.session_state["current_step"])
-
             st.divider()
-
-            # Si l'utilisateur a choisi une autre étape, on met à jour l'état
             if selection_1 != st.session_state["current_step"]:
-                # Delete all the items in Session state
-                for key in st.session_state.keys():
-                    if key not in ["user_id", "authenticated", "current_page"]:
-                        del st.session_state[key]
-                    else:
-                        pass
                 st.session_state["current_step"] = selection_1
                 st.rerun()
 
-            # Disposition des colonnes pour l'affichage avec Streamlit
             chat_col, empty_col, img_col = st.columns([1.5, 0.1, 1])
             with img_col:
                 st.image("wcs/projet_3/img/Leonardo_Phoenix_09_a_whimsical_cartoon_illustration_of_a_robo_1.jpg",
-                         width=500)  # Ajuste la largeur à 500 pixels
+                         width=500)
             with chat_col:
                 if "user_location" not in st.session_state:
                     st.session_state["user_location"] = ()
@@ -102,102 +78,79 @@ def chatbot():
                         #st.warning(
                             #"Impossible d'obtenir votre localisation. Assurez-vous que la géolocalisation est activée.")
 
-                # Initialisation du chatbot
                 if "robot" not in st.session_state:
                     st.session_state["robot"] = Robot_bistro()
                     st.session_state["robot"].preprompt("wcs/projet_3/prompt/robot_chat.txt")
-
-                # Initialisation de l'historique des messages
                 if "messages" not in st.session_state:
-                    st.session_state.messages = []
-
+                    st.session_state["messages"] = []
                 avatar_bot = "wcs/projet_3/img/icons8-robot-100.png"
                 avatar_user = "wcs/projet_3/img/user.png"
-                # Affiche le message de bienvenue avec l'avatar du chatbot
                 st.chat_message("assistant", avatar=avatar_bot).write(st.session_state["robot"].get_welcome())
-
-                # Affiche les messages précédents dans l'ordre chronologique
-                for message in st.session_state.messages:
-                    avatar = avatar_user if message["role"] == "user" else avatar_bot  # Choix de l'avatar
+                for message in st.session_state["messages"]:
+                    avatar = avatar_user if message["role"] == "user" else avatar_bot
                     st.chat_message(message["role"], avatar=avatar).write(message["text"])
-                action_buttons_container = st.container(key="testcont")
 
-                # Espacement entre les icônes
+                action_buttons_container = st.container(key="testcont")
                 cols_dimensions = [20, 29, 40, 9]
                 col1, col2, col3, col4 = action_buttons_container.columns(cols_dimensions)
-
                 with col2:
-                    # Bouton pour effacer le chat
                     if st.button("Réinitialiser le Chat 🧹"):
                         st.session_state["messages"] = []
                         st.rerun()
 
-                with col3:
-                    icon = "😩 J'ai FAIMMMM !!! 😩"
-                    if st.button(icon):
-                        if "history" not in st.session_state:
-                            st.session_state["history"] = []
-                        df_resto = sql_user.listing_resto(st.session_state['user_id'][1])
-                        category_counts = df_resto['Catégorie'].value_counts()
-                        df_favorite = pd.DataFrame(category_counts).reset_index()
-                        adresse = mage_local.gps_to_address_google(user_lat, user_lon)
+                    with col3:
+                        icon = "😩 J'ai FAIMMMM !!! 😩"
+                        if st.button(icon):
+                            st.session_state.setdefault("history", [])
+                            df_resto = sql_user.listing_resto(st.session_state['user_id'][1])
+                            category_counts = df_resto['Catégorie'].value_counts()
+                            df_favorite = pd.DataFrame(category_counts).reset_index()
+                            adresse = mage_local.gps_to_address_google(
+                                st.session_state["user_location"][0],
+                                st.session_state["user_location"][1]
+                            )
+                            phrase = f"Je veux manger {df_favorite['Catégorie'].iloc[0]}, à cette adresse {adresse}, sans budget ni régime particulier"
+                            st.toast(f'Vous avez faim et vous aimez la {df_favorite["Catégorie"].iloc[0]}')
+                            time.sleep(0.5)
+                            st.toast("Allez Go !! je m'occupe de vous trouver ça", icon='🎉')
+                            time.sleep(0.5)
+                            st.session_state["history"].append(phrase)
+                            query = st.session_state["robot"].talk(phrase)
+                            st.session_state["history"].append(query)
+                            st.session_state["robot_hist"] = Robot_bistro()
+                            st.session_state["robot_hist"].preprompt("wcs/projet_3/prompt/robot_hist.txt")
+                            history = st.session_state["robot_hist"].talk(st.session_state["history"])
+                            st.session_state["extracted_info"] = history
+                            st.session_state["has_moved_to_step_2"] = True
+                            st.session_state["current_step"] = "🍽️ Trouve ton resto idéal"
+                            st.rerun()
 
-                        phrase = f"Je veux manger {df_favorite['Catégorie'].iloc[0]} , à cette adresse {adresse} pas de budget et de régime alimentaire particulier"
-                        st.toast(f'Vous avez faim et vous aimez la {df_favorite["Catégorie"].iloc[0]}')
-                        time.sleep(.5)
-                        st.toast("Allez Go !! je m'occupe de vous trouvez ça", icon='🎉')
-                        time.sleep(.5)
+                    st.chat_input("Faites une demande", key="prompt", on_submit=addtext)
 
-                        st.session_state["history"].append(phrase)
-                        query = st.session_state["robot"].talk(phrase)
+                if any("Très bien. Tout est bon, je lance la recherche !" in msg["text"] for msg in
+                       st.session_state.get("messages", [])) and not st.session_state["has_moved_to_step_2"]:
+                    st.session_state["robot_hist"] = Robot_bistro()
+                    st.session_state["robot_hist"].preprompt("wcs/projet_3/prompt/robot_hist.txt")
+                    history = [f'{dico["role"]}:{dico["text"]}' for dico in st.session_state["messages"]]
+                    st.session_state["extracted_info"] = st.session_state["robot_hist"].talk(history)
+                    st.session_state["has_moved_to_step_2"] = True
+                    st.session_state["current_step"] = "🍽️ Trouve ton resto idéal"
+                    st.rerun()
 
-                        st.session_state["history"].append(query)
-                        st.session_state["robot_hist"] = Robot_bistro()
-                        st.session_state["robot_hist"].preprompt("wcs/projet_3/prompt/robot_hist.txt")
-                        history = st.session_state["robot_hist"].talk(st.session_state["history"])
-
-                        # Stockage des informations extraites
-                        st.session_state["extracted_info"] = history
-                        # Marque que l'étape 2 a été atteinte pour éviter la boucle infinie
-                        st.session_state["has_moved_to_step_2"] = True
-                        st.session_state["current_step"] = "🍽️ Trouve ton resto idéal"
-                        st.rerun()
-
-                # Barre de saisie en bas, juste après les boutons
-                st.chat_input("Faites une demande", key="prompt", on_submit=addtext)
-
-            # Vérification de la présence du message spécifique
-            if any("Très bien. Tout est bon, je lance la recherche !" in msg["text"] for msg in
-                   st.session_state.messages) and not st.session_state["has_moved_to_step_2"]:
-                # Création de Robot_hist pour extraire les informations
-                st.session_state["robot_hist"] = Robot_bistro()
-                st.session_state["robot_hist"].preprompt("wcs/projet_3/prompt/robot_hist.txt")
-
-                history = [f'{dico["role"]}:{dico["text"]}' for dico in st.session_state.messages]
-                st.session_state["robot_hist"].talk(history)
-
-                # Stockage des informations extraites
-                st.session_state["extracted_info"] = st.session_state["robot_hist"].talk(history)
-                # Marque que l'étape 2 a été atteinte pour éviter la boucle infinie
-                st.session_state["has_moved_to_step_2"] = True
-                st.session_state["current_step"] = "🍽️ Trouve ton resto idéal"
-                st.rerun()
-
-        # Fonction pour récupérer et redimensionner l'image
-        def get_resized_image(photo_reference, size=(200, 200)):
-            default_img = Image.open("wcs/projet_3/img/icons8-robot-100.png").resize((200, 200))  # Image par défaut
-            image_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="
-            if not photo_reference:
-                return default_img
-            try:
-                img_url = f"{image_url}{photo_reference}&key={API_KEY}"
-                response = requests.get(img_url)
-                if response.status_code == 200:
-                    img = Image.open(BytesIO(response.content)).resize(size)
-                    return img
-            except Exception:
-                pass
-            return default_img  # En cas d'erreur, renvoyer l'image par défaut
+                def get_resized_image(photo_reference, size=(200, 200)):
+                    default_img = Image.open("wcs/projet_3/img/icons8-robot-100.png").resize((200, 200))
+                    image_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="
+                    if not photo_reference:
+                        return default_img
+                    try:
+                        img_url = f"{image_url}{photo_reference}&key={API_KEY}"
+                        response = requests.get(img_url)
+                        if response.status_code == 200:
+                            img = Image.open(BytesIO(response.content)).resize(size)
+                            return img
+                    except Exception:
+                        pass
+                    return default_img
 
         # Vérifier que la session est au bon état
         if st.session_state["current_step"] == "🍽️ Trouve ton resto idéal":
