@@ -1,7 +1,7 @@
 import json
 import requests
 import pandas as pd
-from func.gepetto import Robot_bistro
+from wcs.projet_3.func.gepetto import Robot_bistro
 from PIL import Image
 from io import BytesIO
 import folium
