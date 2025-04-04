@@ -84,7 +84,7 @@ if st.session_state.page == "Accueil":
 
             <p>Je suis <strong>Julien Castellano</strong>, un <strong>Data Analyst Junior</strong> passionné par la donnée et son potentiel. Après une carrière de 8 ans dans les télécoms, j’ai fait le choix de me reconvertir dans la <strong>Data</strong> et l’<strong>Intelligence Artificielle</strong>.</p>
 
-            <p>Récemment diplômé d’une <strong>licence en Data Analytics</strong> à la <strong>Wild Code School</strong>, je poursuis désormais mon évolution en me spécialisant en <strong>Data Engineering</strong>, avec l’ambition d’intégrer un <strong>Master en Data & IA</strong>. Mon objectif est de concevoir et optimiser des architectures de données afin de rendre les infrastructures plus performantes et scalables.</p>
+            <p>Récemment diplômé d’une <strong>licence en Data Analytics</strong> à la <strong>Wild Code School</strong>, je poursuis désormais mon évolution en me spécialisant en <strong>Data Engineering</strong>, avec l’ambition d’intégrer un <strong>Master en Data & IA</strong></p>
 
             <p><strong>Mes compétences :</strong></p>
             <ul style='text-align: left; margin-left: 20%;'>
