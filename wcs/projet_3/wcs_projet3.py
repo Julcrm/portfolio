@@ -132,7 +132,7 @@ def afficher_wcs_projet3():
         st.write(f"**Email**: {email}")
 
         if st.button("Retour à l'accueil"):
-            st.session_state["current_page"] = "Accueil"
+            st.session_state["current_page"] = "chat"
 
     main()
 
