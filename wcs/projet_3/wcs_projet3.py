@@ -5,9 +5,18 @@ from wcs.projet_3.chat import chatbot
 from wcs.projet_3.dash_admin import dash_admin
 from dotenv import load_dotenv
 
-def afficher_wcs_projet3():
+load_dotenv()
 
-    load_dotenv()
+def afficher_wcs_projet3():
+    # Initialisation de la variable pour suivre la page active
+    if "page_projet3" not in st.session_state:
+        st.session_state.page_projet3 = "login"  # Par défaut, la page d'accueil du projet 2 est affichée
+
+    # Définition d'une fonction pour changer la page active
+    def set_page(page_name):
+        st.session_state.page_projet2 = page_name  # Modification de la variable pour changer de page
+
+
 
     # Vérifier si l'utilisateur est connecté avant de configurer la mise en page
 
