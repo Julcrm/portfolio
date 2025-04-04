@@ -5,7 +5,7 @@ from wcs.projet_3.func.gepetto import Robot_bistro
 from PIL import Image
 from io import BytesIO
 import folium
-from func.mage_local import Mage_local
+from wcs.projet_3.func.mage_local import Mage_local
 from streamlit_js_eval import get_geolocation
 from streamlit_float import *
 import streamlit.components.v1 as components
