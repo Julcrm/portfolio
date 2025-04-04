@@ -77,7 +77,7 @@ def chatbot():
 
                 if "robot" not in st.session_state:
                     st.session_state["robot"] = Robot_bistro()
-                    st.session_state["robot"].preprompt("prompt/robot_chat.txt")
+                    st.session_state["robot"].preprompt("wcs/projet_3/prompt/robot_chat.txt")
 
                 if "messages" not in st.session_state:
                     st.session_state.messages = []
@@ -114,7 +114,7 @@ def chatbot():
                         query = st.session_state["robot"].talk(phrase)
                         st.session_state["history"].append(query)
                         st.session_state["robot_hist"] = Robot_bistro()
-                        st.session_state["robot_hist"].preprompt("prompt/robot_hist.txt")
+                        st.session_state["robot_hist"].preprompt("wcs/projet_3/prompt/robot_hist.txt")
                         history = st.session_state["robot_hist"].talk(st.session_state["history"])
                         st.session_state["extracted_info"] = history
                         st.session_state["has_moved_to_step_2"] = True
@@ -126,7 +126,7 @@ def chatbot():
             # Passage à l'étape 2 dès qu'un message spécifique a été détecté
             if any("Très bien. Tout est bon, je lance la recherche !" in msg["text"] for msg in st.session_state.messages) and not st.session_state["has_moved_to_step_2"]:
                 st.session_state["robot_hist"] = Robot_bistro()
-                st.session_state["robot_hist"].preprompt("prompt/robot_hist.txt")
+                st.session_state["robot_hist"].preprompt("wcs/projet_3/prompt/robot_hist.txt")
                 history = [f'{dico["role"]}:{dico["text"]}' for dico in st.session_state.messages]
                 st.session_state["robot_hist"].talk(history)
                 st.session_state["extracted_info"] = st.session_state["robot_hist"].talk(history)
