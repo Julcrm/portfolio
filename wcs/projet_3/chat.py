@@ -6,7 +6,7 @@ from PIL import Image
 from io import BytesIO
 import folium
 from wcs.projet_3.func.mage_local import Mage_local
-from streamlit_js_eval import get_geolocation
+#from streamlit_js_eval import get_geolocation
 from streamlit_float import *
 import streamlit.components.v1 as components
 import time
@@ -90,17 +90,17 @@ def chatbot():
                 if "user_location" not in st.session_state:
                     st.session_state["user_location"] = ()
                     # Récupération de la localisation de l'utilisateur
-                location_data = get_geolocation()
-                user_location = None
+                #location_data = get_geolocation()
+                #user_location = None
 
-                if location_data:
-                    user_lat = location_data.get("coords", {}).get("latitude")
-                    user_lon = location_data.get("coords", {}).get("longitude")
-                    if user_lat and user_lon:
-                        st.session_state["user_location"] = (user_lat, user_lon)
-                    else:
-                        st.warning(
-                            "Impossible d'obtenir votre localisation. Assurez-vous que la géolocalisation est activée.")
+                #if location_data:
+                    #user_lat = location_data.get("coords", {}).get("latitude")
+                    #user_lon = location_data.get("coords", {}).get("longitude")
+                    #if user_lat and user_lon:
+                        #st.session_state["user_location"] = (user_lat, user_lon)
+                    #else:
+                        #st.warning(
+                            #"Impossible d'obtenir votre localisation. Assurez-vous que la géolocalisation est activée.")
 
                 # Initialisation du chatbot
                 if "robot" not in st.session_state:
