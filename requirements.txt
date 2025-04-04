@@ -4,3 +4,15 @@ pandas
 plotly.express
 requests
 diskcache
+json5
+Pillow
+folium
+streamlit-js-eval
+streamlit-float
+streamlit-option-menu
+SQLAlchemy
+numpy
+google-generativeai
+psycopg2
+streamlit_folium
+python-dotenv
