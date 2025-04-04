@@ -1,18 +1,18 @@
 import json
 import requests
 import pandas as pd
-from func.gepetto import Robot_bistro
+from wcs.projet_3.func.gepetto import Robot_bistro
 from PIL import Image
 from io import BytesIO
 import folium
-from func.mage_local import Mage_local
+from wcs.projet_3.func.mage_local import Mage_local
 from streamlit_js_eval import get_geolocation
 from streamlit_float import *
 import streamlit.components.v1 as components
 import time
 from streamlit_option_menu import option_menu
-from dash_user import dash_user
-from func.SQL_user import SQL_user
+from wcs.projet_3.dash_user import dash_user
+from wcs.projet_3.func.SQL_user import SQL_user
 import streamlit as st
 import os
 

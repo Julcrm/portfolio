@@ -1,4 +1,4 @@
-from func.SQL_user import SQL_user
+from wcs.projet_3.func.SQL_user import SQL_user
 import pandas as pd
 import plotly.express as px
 import folium
