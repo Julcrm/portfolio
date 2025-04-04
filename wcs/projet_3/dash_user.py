@@ -26,8 +26,8 @@ def dash_user():
 
     sql_user = SQL_user()
 
-    user_id = 12
-    name = "Julien Castellano"
+    user_id = st.session_state["user_id"][1]
+    name = st.session_state["user_id"][2]
 
     df_liste = sql_user.listing_resto(user_id)
 

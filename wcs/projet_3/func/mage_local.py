@@ -27,7 +27,7 @@ class Mage_local:
 
     def __init__(self):
         self.engine = create_engine(f"{Mage_local.DATABASE_TYPE}+{Mage_local.DBAPI}://{Mage_local.USER}:{Mage_local.PASSWORD}@{Mage_local.HOST}:{Mage_local.PORT}/{Mage_local.DATABASE}"),
-        self.user_id = 12
+        self.user_id = st.session_state["user_id"][1]
 
     
     def request_api(self, query):
