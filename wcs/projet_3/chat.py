@@ -6,7 +6,7 @@ from PIL import Image
 from io import BytesIO
 import folium
 from wcs.projet_3.func.mage_local import Mage_local
-from streamlit_js_eval import get_geolocation
+#from streamlit_js_eval import get_geolocation  # Décommentez si nécessaire
 from streamlit_float import *
 import streamlit.components.v1 as components
 import time
@@ -20,7 +20,7 @@ def chatbot():
     mage_local = Mage_local()
     sql_user = SQL_user()
 
-    # Dès que l'utilisateur est authentifié, force l'affichage du chatbot et met à jour les clés héritées
+    # Dès que l'utilisateur est authentifié, forcer l'affichage du chatbot et mettre à jour les clés héritées
     if st.session_state.get("authenticated"):
         st.session_state["current_page"] = "chat"
         st.session_state["page_projet3"] = "chat"
@@ -63,15 +63,15 @@ def chatbot():
             with chat_col:
                 if "user_location" not in st.session_state:
                     st.session_state["user_location"] = ()
-                # Pour le débogage, vous pouvez commenter temporairement get_geolocation()
-                #location_data = get_geolocation()
-                #if location_data:
-                    #user_lat = location_data.get("coords", {}).get("latitude")
-                    #user_lon = location_data.get("coords", {}).get("longitude")
-                    #if user_lat and user_lon:
-                        #st.session_state["user_location"] = (user_lat, user_lon)
-                   # else:
-                       # st.warning("Impossible d'obtenir votre localisation. Activez la géolocalisation.")
+                # Pour tester, on commente temporairement l'appel à get_geolocation()
+                # location_data = get_geolocation()
+                # if location_data:
+                #     user_lat = location_data.get("coords", {}).get("latitude")
+                #     user_lon = location_data.get("coords", {}).get("longitude")
+                #     if user_lat and user_lon:
+                #         st.session_state["user_location"] = (user_lat, user_lon)
+                #     else:
+                #         st.warning("Impossible d'obtenir votre localisation. Activez la géolocalisation.")
                 if "robot" not in st.session_state:
                     st.session_state["robot"] = Robot_bistro()
                     st.session_state["robot"].preprompt("wcs/projet_3/prompt/robot_chat.txt")
@@ -90,7 +90,7 @@ def chatbot():
                 with col2:
                     if st.button("Réinitialiser le Chat 🧹"):
                         st.session_state["messages"] = []
-                        st.experimental_rerun()
+                        st.rerun()
                 with col3:
                     icon = "😩 J'ai FAIMMMM !!! 😩"
                     if st.button(icon):
