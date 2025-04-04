@@ -64,7 +64,7 @@ with st.sidebar:
         set_page("wcs_projet1")
     if st.button("Recommandation Films 🍿"):
         set_page("wcs_projet2")
-    if st.button("Projet 3 - En cours 🚧"):
+    if st.button("En cours d'intégration 🚧"):
         set_page("wcs_projet3")
     st.markdown("""
     ### Projets personnels  <img src='https://cdn-icons-png.flaticon.com/512/6140/6140802.png' width='25' height='25'>""", 

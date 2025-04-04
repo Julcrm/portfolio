@@ -30,7 +30,7 @@ def afficher_wcs_projet3():
 
         # Afficher la page actuelle
         if st.session_state["authenticated"]:
-            if st.session_state["current_page"] == "Accueil":
+            if st.session_state["current_page"] == "chat":
                 chatbot()
             elif st.session_state["current_page"] == "Compte":
                 show_account_page()
@@ -118,7 +118,7 @@ def afficher_wcs_projet3():
                 elif st.session_state["user_id"][0]:
                     st.session_state["authenticated"] = True
                     st.session_state["current_user"] = email
-                    st.session_state["current_page"] = "Accueil"
+                    st.session_state["current_page"] = "chat"
                     st.rerun()
                 else:
                     st.error("Email ou mot de passe incorrect !")
