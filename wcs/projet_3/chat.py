@@ -11,8 +11,8 @@ from streamlit_float import *
 import streamlit.components.v1 as components
 import time
 from streamlit_option_menu import option_menu
-from dash_user import dash_user
-from func.SQL_user import SQL_user
+from wcs.projet_3.dash_user import dash_user
+from wcs.projet_3.func.SQL_user import SQL_user
 import streamlit as st
 import os
 
