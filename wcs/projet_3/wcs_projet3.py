@@ -141,5 +141,5 @@ def afficher_wcs_projet3():
         if st.button("Retour à l'accueil"):
             st.session_state["current_page"] = "Accueil"
 
-    if __name__ == "__main__":
-        main()
+    main()
+
