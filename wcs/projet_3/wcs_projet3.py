@@ -38,7 +38,6 @@ def afficher_wcs_projet3():
                 dash_admin()
         else:
             if st.session_state["current_page"] == "Landing":
-                st.set_page_config(page_title="Login", layout="centered")
                 show_landing_page()
             elif st.session_state["current_page"] == "Signup":
                 show_signup_form()
