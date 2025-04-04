@@ -20,37 +20,33 @@ def chatbot():
     mage_local = Mage_local()
     sql_user = SQL_user()
 
-    # Dès que l'utilisateur est connecté et que l'on souhaite afficher le chatbot,
-    # on nettoie ou met à jour les clés héritées de la page de login
+    # Dès que l'utilisateur est authentifié, force l'affichage du chatbot et met à jour les clés héritées
     if st.session_state.get("authenticated"):
         st.session_state["current_page"] = "chat"
-        # On remplace les anciennes clés pour éviter d'afficher l'UI de login
         st.session_state["page_projet3"] = "chat"
         if st.session_state.get("page") == "wcs_projet3":
             st.session_state["page"] = "chat"
 
     API_KEY = os.getenv('api_google')
 
-    if st.session_state["current_page"] == "chat":
+    if st.session_state.get("current_page") == "chat":
         # Initialisation de l'étape du chatbot
         if "current_step" not in st.session_state:
             st.session_state["current_step"] = "🤖 Discute avec Robot bistro"
 
-        # Initialisation de quelques variables nécessaires
-        if 'dico' not in st.session_state:
-            st.session_state.dico = dict()
-        if "has_moved_to_step_2" not in st.session_state:
-            st.session_state["has_moved_to_step_2"] = False
+        # Initialisation des variables nécessaires
+        st.session_state.setdefault('dico', dict())
+        st.session_state.setdefault("has_moved_to_step_2", False)
 
         # Fonction d'ajout de message et génération de réponse
         def addtext():
             user_input = st.session_state.get("prompt", "")
             if user_input:
-                st.session_state.messages.append({"role": "user", "text": user_input})
-                st.session_state["history"] = [msg["text"] for msg in st.session_state.messages if msg["role"] == "user"]
-            context = "\n".join([msg["text"] for msg in st.session_state.messages])
+                st.session_state.setdefault("messages", []).append({"role": "user", "text": user_input})
+                st.session_state["history"] = [msg["text"] for msg in st.session_state["messages"] if msg["role"] == "user"]
+            context = "\n".join([msg["text"] for msg in st.session_state.get("messages", [])])
             response_bot = st.session_state["robot"].talk(context)
-            st.session_state.messages.append({"role": "assistant", "text": response_bot})
+            st.session_state["messages"].append({"role": "assistant", "text": response_bot})
 
         # Affichage de la première étape du chatbot
         if st.session_state["current_step"] == "🤖 Discute avec Robot bistro":
@@ -59,7 +55,7 @@ def chatbot():
             st.divider()
             if selection_1 != st.session_state["current_step"]:
                 st.session_state["current_step"] = selection_1
-                st.experimental_rerun()
+                st.rerun()
 
             chat_col, empty_col, img_col = st.columns([1.5, 0.1, 1])
             with img_col:
@@ -67,23 +63,24 @@ def chatbot():
             with chat_col:
                 if "user_location" not in st.session_state:
                     st.session_state["user_location"] = ()
-                location_data = get_geolocation()
-                if location_data:
-                    user_lat = location_data.get("coords", {}).get("latitude")
-                    user_lon = location_data.get("coords", {}).get("longitude")
-                    if user_lat and user_lon:
-                        st.session_state["user_location"] = (user_lat, user_lon)
-                    else:
-                        st.warning("Impossible d'obtenir votre localisation. Activez la géolocalisation.")
+                # Pour le débogage, vous pouvez commenter temporairement get_geolocation()
+                #location_data = get_geolocation()
+                #if location_data:
+                    #user_lat = location_data.get("coords", {}).get("latitude")
+                    #user_lon = location_data.get("coords", {}).get("longitude")
+                    #if user_lat and user_lon:
+                        #st.session_state["user_location"] = (user_lat, user_lon)
+                   # else:
+                       # st.warning("Impossible d'obtenir votre localisation. Activez la géolocalisation.")
                 if "robot" not in st.session_state:
                     st.session_state["robot"] = Robot_bistro()
                     st.session_state["robot"].preprompt("wcs/projet_3/prompt/robot_chat.txt")
                 if "messages" not in st.session_state:
-                    st.session_state.messages = []
+                    st.session_state["messages"] = []
                 avatar_bot = "wcs/projet_3/img/icons8-robot-100.png"
                 avatar_user = "wcs/projet_3/img/user.png"
                 st.chat_message("assistant", avatar=avatar_bot).write(st.session_state["robot"].get_welcome())
-                for message in st.session_state.messages:
+                for message in st.session_state["messages"]:
                     avatar = avatar_user if message["role"] == "user" else avatar_bot
                     st.chat_message(message["role"], avatar=avatar).write(message["text"])
 
@@ -97,8 +94,7 @@ def chatbot():
                 with col3:
                     icon = "😩 J'ai FAIMMMM !!! 😩"
                     if st.button(icon):
-                        if "history" not in st.session_state:
-                            st.session_state["history"] = []
+                        st.session_state.setdefault("history", [])
                         df_resto = sql_user.listing_resto(st.session_state['user_id'][1])
                         category_counts = df_resto['Catégorie'].value_counts()
                         df_favorite = pd.DataFrame(category_counts).reset_index()
@@ -120,18 +116,18 @@ def chatbot():
                         st.session_state["extracted_info"] = history
                         st.session_state["has_moved_to_step_2"] = True
                         st.session_state["current_step"] = "🍽️ Trouve ton resto idéal"
-                        st.experimental_rerun()
+                        st.rerun()
 
                 st.chat_input("Faites une demande", key="prompt", on_submit=addtext)
 
-            if any("Très bien. Tout est bon, je lance la recherche !" in msg["text"] for msg in st.session_state.messages) and not st.session_state["has_moved_to_step_2"]:
+            if any("Très bien. Tout est bon, je lance la recherche !" in msg["text"] for msg in st.session_state.get("messages", [])) and not st.session_state["has_moved_to_step_2"]:
                 st.session_state["robot_hist"] = Robot_bistro()
                 st.session_state["robot_hist"].preprompt("wcs/projet_3/prompt/robot_hist.txt")
-                history = [f'{dico["role"]}:{dico["text"]}' for dico in st.session_state.messages]
+                history = [f'{dico["role"]}:{dico["text"]}' for dico in st.session_state["messages"]]
                 st.session_state["extracted_info"] = st.session_state["robot_hist"].talk(history)
                 st.session_state["has_moved_to_step_2"] = True
                 st.session_state["current_step"] = "🍽️ Trouve ton resto idéal"
-                st.experimental_rerun()
+                st.rerun()
 
             def get_resized_image(photo_reference, size=(200, 200)):
                 default_img = Image.open("wcs/projet_3/img/icons8-robot-100.png").resize((200, 200))
@@ -148,318 +144,5 @@ def chatbot():
                     pass
                 return default_img
 
-        if st.session_state["current_step"] == "🍽️ Trouve ton resto idéal":
-            options_2 = ["🤖 Discute avec Robot bistro", "🍽️ Trouve ton resto idéal"]
-            selection_2 = st.pills("Les étapes :", options_2, selection_mode="single", default=st.session_state["current_step"])
-            if selection_2 != st.session_state["current_step"]:
-                st.session_state["current_step"] = selection_2
-                st.experimental_rerun()
-            st.divider()
-            if "selected" not in st.session_state:
-                st.session_state["selected"] = ""
-            df = mage_local.request_api(st.session_state["extracted_info"])
-            if len(df) > 0:
-                cols = st.columns([2, 2, 3])
-                for i, row in enumerate(df.itertuples()):
-                    if i < 2:
-                        col = cols[0]
-                    elif i < 4:
-                        col = cols[1]
-                    else:
-                        continue
-                    with col:
-                        if st.button(f"Choisir {row.name}", key=f"select_restaurant_{i}"):
-                            st.session_state.update({
-                                "selected": row.name,
-                                "lat": row.lat,
-                                "lng": row.lng,
-                                "formated_address_selected": row.formatted_address,
-                                "rating_selected": row.rating,
-                                "user_ratings_total_selected": row.user_ratings_total,
-                                "photo_reference_selected": row.photo_reference,
-                                "location_selected": [row.lat, row.lng],
-                                "place_id": row.place_id,
-                                "current_step": "🏁 À table !"
-                            })
-                            mage_local.api_mage(df)
-                            st.experimental_rerun()
-                        img = get_resized_image(row.photo_reference)
-                        st.image(img, width=200)
-                        st.markdown(f'<div style="height: 40px;">⭐ Note : {row.rating}</div>', unsafe_allow_html=True)
-                        st.markdown(f'<div style="height: 40px;">👥 Votes : {row.user_ratings_total}</div>', unsafe_allow_html=True)
-                        st.markdown(f'<div style="height: 50px; max-width: 200px; word-wrap: break-word;">📍 Adresse : {row.formatted_address}</div>', unsafe_allow_html=True)
-                        st.write("")
-                        st.write("")
-                        st.markdown("<hr style='border: 1px solid #ddd; width: 80%;'>", unsafe_allow_html=True)
-                locations = df[['lat', 'lng']].values.tolist()
-                mean_lat = df['lat'].mean()
-                mean_lng = df['lng'].mean()
-                map_folium = folium.Map(
-                    location=[mean_lat, mean_lng],
-                    zoom_start=13,
-                    tiles="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
-                    attr='&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>',
-                )
-                for i, (lat, lng) in enumerate(locations):
-                    popup_html = f"""
-                    <div style='width:300px'>
-                    <b>Nom :</b> {df.iloc[i]["name"]} 🏙️<br>
-                    <b>Note :</b> {df.iloc[i]["rating"]} ⭐<br>
-                    </div>
-                    """
-                    folium.Marker(
-                        location=[lat, lng],
-                        tooltip="Plus d'informations !",
-                        popup=popup_html,
-                        icon=folium.DivIcon(html="""
-                               <div style="text-align: center;">
-                                   <img src="https://i.postimg.cc/jSQwjLmS/hat.png"
-                                   style="width: 30px; height: 30px;"><br>
-                               </div>
-                           """)
-                    ).add_to(map_folium)
-                fig = folium.Figure(height=650, width=560)
-                map_folium.add_to(fig)
-                with cols[2]:
-                    st.markdown("<h3 style='text-align: center;'>Carte des restaurants</h3>", unsafe_allow_html=True)
-                    st.write("")
-                    st.write("")
-                    col_empty_1, col_map1, col_empty_2 = st.columns([0.3, 2, 2])
-                    with col_map1:
-                        st.components.v1.html(map_folium._repr_html_(), height=650, width=560)
-            else:
-                st.write("Aucun restaurant trouvé après mes recherches.")
-
-        if st.session_state["current_step"] == "🏁 À table !":
-            options_3 = ["🤖 Discute avec Robot bistro", "🍽️ Trouve ton resto idéal", "🏁 À table !"]
-            selection_3 = st.pills("Les étapes :", options_3, selection_mode="single", default=st.session_state["current_step"])
-            st.divider()
-            if selection_3 != st.session_state["current_step"]:
-                st.session_state["current_step"] = selection_3
-                st.experimental_rerun()
-            if "mode" not in st.session_state:
-                st.session_state["mode"] = "driving"
-            start_location = f"{st.session_state['user_location'][0]}, {st.session_state['user_location'][1]}"
-            end_location = f"{st.session_state['lat']}, {st.session_state['lng']}"
-            driving_map, driving_km = mage_local.afficher_itineraire(start_location, end_location, st.session_state["mode"])
-            walking_map, walking_km = mage_local.afficher_itineraire(start_location, end_location, st.session_state["mode"])
-            cols = st.columns([2, 0.7, 0.2, 0.1, 3])
-            with cols[4]:
-                st.markdown("<div style='text-align: center;'><h3>📍 Sélection :</h3></div>", unsafe_allow_html=True)
-                st.write(f"<div style='text-align: center;'>{st.session_state['selected']}</div>", unsafe_allow_html=True)
-                st.write("")
-                img = get_resized_image(st.session_state["photo_reference_selected"])
-                col_empty_m1, col_empty_m2, col_map = st.columns([0.5, 1, 3])
-                with col_map:
-                    st.image(img)
-                st.markdown("""<div style="text-align: center;"><h3>🏠 Adresse :</h3></div>""", unsafe_allow_html=True)
-                st.write(f"<div style='text-align: center;'>{st.session_state['formated_address_selected']}</div>", unsafe_allow_html=True)
-                phone = mage_local.phone(st.session_state["place_id"])
-                st.markdown("")
-                st.markdown("""<div style="text-align: center;"><h3>☎️ Téléphone :</h3></div>""", unsafe_allow_html=True)
-                st.write(f"<div style='text-align: center;'>{phone}</div>", unsafe_allow_html=True)
-                st.markdown("<hr style='border: 1px solid #ddd; width: 100%;'>", unsafe_allow_html=True)
-                st.markdown("""<div style="text-align: center;"><h3>⭐ Avis :</h3></div>""", unsafe_allow_html=True)
-                reviews = mage_local.reviews(st.session_state["place_id"])
-                if len(reviews) > 0:
-                    mage_local.show_carrousel(reviews)
-            with cols[0]:
-                col_toggle, col_empty, col_button = st.columns([5, 0.5, 1])
-                with col_toggle:
-                    walking = st.toggle("Y aller à pied", key="toggle")
-                if walking:
-                    st.session_state["mode"] = "walking"
-                    walking_duree = mage_local.afficher_duree(start_location, end_location, st.session_state["mode"])
-                    st.markdown(f"""<div style="font-size: 1.25rem; font-weight: bold;">Temps de trajet : {walking_duree} &nbsp;&nbsp; <img src="https://i.ibb.co/LhJVnC1m/walking.png" width="40"></div>""", unsafe_allow_html=True)
-                else:
-                    st.session_state["mode"] = "driving"
-                    driving_duree = mage_local.afficher_duree(start_location, end_location, st.session_state["mode"])
-                    st.markdown(f"""<div style="font-size: 1.25rem; font-weight: bold;">Temps de trajet : {driving_duree} &nbsp;&nbsp; <img src="https://i.ibb.co/qFFFybvZ/car-1.png" width="40"></div>""", unsafe_allow_html=True)
-                if st.session_state["mode"] == "driving":
-                    st.components.v1.html(driving_map._repr_html_(), height=600, width=550)
-                else:
-                    st.components.v1.html(walking_map._repr_html_(), height=600, width=550)
-                with col_button:
-                    if st.button("GO !!", key="go"):
-                        if st.session_state["mode"] == "driving":
-                            mage_local.api_mage_distance(st.session_state["mode"], driving_km)
-                        else:
-                            mage_local.api_mage_distance(st.session_state["mode"], walking_km)
-                        st.toast("C'est parti ! Le trajet a été ajouté à votre tableau de bord 🎉")
-                        st.session_state["current_step"] = "Go !"
-                        st.experimental_rerun()
-
-        if st.session_state["current_step"] == "Go !":
-            options_3 = ["🤖 Discute avec Robot bistro", "🍽️ Trouve ton resto idéal", "🏁 À table !", "Go !"]
-            selection_3 = st.pills("Les étapes :", options_3, selection_mode="single", default=st.session_state["current_step"])
-            st.divider()
-            if selection_3 != st.session_state["current_step"]:
-                st.session_state["current_step"] = selection_3
-                st.experimental_rerun()
-            cols1, cols2 = st.columns(2)
-            with cols2:
-                st.markdown("<div style='text-align: center;'><h3>📍 Sélection :</h3></div>", unsafe_allow_html=True)
-                st.write(f"<div style='text-align: center;'>{st.session_state['selected']}</div>", unsafe_allow_html=True)
-                st.write("")
-                img = get_resized_image(st.session_state["photo_reference_selected"])
-                col_empty_m1, col_empty_m2, col_map = st.columns([0.5, 1, 3])
-                with col_map:
-                    st.image(img)
-                st.markdown("""<div style="text-align: center;"><h3>🏠 Adresse :</h3></div>""", unsafe_allow_html=True)
-                st.write(f"<div style='text-align: center;'>{st.session_state['formated_address_selected']}</div>", unsafe_allow_html=True)
-                phone = mage_local.phone(st.session_state["place_id"])
-                st.markdown("")
-                st.markdown("""<div style="text-align: center;"><h3>☎️ Téléphone :</h3></div>""", unsafe_allow_html=True)
-                st.write(f"<div style='text-align: center;'>{phone}</div>", unsafe_allow_html=True)
-                st.markdown("<hr style='border: 1px solid #ddd; width: 100%;'>", unsafe_allow_html=True)
-                st.markdown("""<div style="text-align: center;"><h3>⭐ Avis :</h3></div>""", unsafe_allow_html=True)
-                reviews = mage_local.reviews(st.session_state["place_id"])
-                if len(reviews) > 0:
-                    mage_local.show_carrousel(reviews)
-            with cols1:
-                st.markdown(
-        """
-        <style>
-        @import url('https://fonts.bunny.net/css?family=bad-script:400');
-        .handwritten {
-            font-family: 'Bad Script', cursive;
-            font-size: 48px;
-            text-align: center;
-        }
-        .bonappetit {
-            font-family: 'Bad Script', cursive;
-            font-size: 48px;
-            text-align: center;
-        }
-        .bottom-right {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-family: 'Bad Script', cursive;
-            font-size: 30px;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-                st.write("")
-                st.write("")
-                st.write("")
-                st.markdown('<div class="handwritten">Merci d\'avoir choisi Bistro Robot</div>', unsafe_allow_html=True)
-                st.write("")
-                st.markdown('<div class="bonappetit">Bon appétît</div>', unsafe_allow_html=True)
-                st.write("")
-                st.write("")
-                time.sleep(3)
-                st.markdown('<div class="bottom-right">Merci Léo</div>', unsafe_allow_html=True)
-                time.sleep(2)
-                st.balloons()
-
-        with st.sidebar:
-            val_menu = option_menu(menu_title=None, options=["Robot Bistro", "Tableau de bord", "Déconnexion"],
-                                   icons=['house', 'graph-up-arrow', "box-arrow-left"])
-            if val_menu == "Robot Bistro":
-                st.session_state["current_page"] = "chat"
-            if val_menu == "Tableau de bord":
-                st.session_state["current_page"] = "dash_user"
-                st.experimental_rerun()
-            if val_menu == "Déconnexion":
-                keys_to_keep = ["current_page"]
-                keys_to_delete = [key for key in st.session_state.keys() if key not in keys_to_keep]
-                for key in keys_to_delete:
-                    del st.session_state[key]
-                if "current_page" not in st.session_state:
-                    st.session_state["current_page"] = "login"
-                st.experimental_rerun()
-
-    elif st.session_state["current_page"] == "dash_user":
-        dash_user()
-
-    st.markdown(
-        """
-        <style>
-            .st-emotion-cache-janbn0 {
-                background-color: rgba(255, 112, 67, 0.9) !important;
-            }
-            .st-emotion-cache-4oy321 {
-                background-color: rgba(213, 220, 220, 0.5) !important;
-            }
-            .st-emotion-cache-1wtrl3u:hover {
-                color: rgba(255, 112, 67, 0.9);
-                border: 1px solid rgba(255, 112, 67, 0.9);
-                height: 2.5rem;
-                max-width: 48rem;
-                padding: 0.35rem 0.80rem;
-            }
-            .st-emotion-cache-1d25zpz:hover {
-                color: rgba(255, 112, 67, 0.9);
-                border: 1px solid rgba(255, 112, 67, 0.9);
-                height: 2.5rem;
-                max-width: 48rem;
-                padding: 0.35rem 0.80rem;
-            }
-            .st-emotion-cache-1d25zpz {
-                height: 2.5rem;
-                max-width: 48rem;
-                padding: 0.35rem 0.80rem;
-            }
-            .st-emotion-cache-1wtrl3u {
-                color: rgba(255, 112, 67, 0.9);
-                border: 1px solid rgba(255, 112, 67, 0.9);
-                height: 2.5rem;
-                max-width: 48rem;
-                padding: 0.35rem 0.80rem;
-            }
-            .st-emotion-cache-b0y9n5 button {
-                width: 200px;
-                min-width: 200px;
-                max-width: 200px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                font-size: 16px;
-                white-space: nowrap;
-                overflow: hidden;
-            }
-            .st-emotion-cache-b0y9n5 button span {
-                display: inline-block;
-                max-width: 100%;
-                transform-origin: center;
-            }
-            .st-emotion-cache-b0y9n5 button span {
-                font-size: clamp(10px, 2vw, 16px);
-            }
-            .st-emotion-cache-b0y9n5:hover {
-                color: rgba(255, 112, 67, 0.9);
-                border: 1px solid rgba(255, 112, 67, 0.9);
-            }
-            .st-key-toggle>div>label>div{
-                transform: scale(1.5)
-            }
-            .st-key-toggle p{
-                margin-left: 30px;
-            }
-            .st-key-go p {
-                font-size: 20px;
-                height: 2em;
-                width: 5em;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        """
-        <style>
-            @import url('https://fonts.bunny.net/css?family=fredoka:400');
-            html, body, * {
-                font-family: 'Fredoka', sans-serif !important;
-            }
-            .stButton > button {
-                font-family: 'Fredoka', sans-serif !important;
-                font-size: 18px;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+if __name__ == '__main__':
+    chatbot()
