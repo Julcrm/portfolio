@@ -90,7 +90,6 @@ if st.session_state.page == "Accueil":
             <ul style='text-align: left; margin-left: 20%;'>
                 <li><strong>SQL 🗄️ :</strong> Optimisation et gestion de bases de données relationnelles.</li>
                 <li><strong>Python 🐍 :</strong> Manipulation de données, automatisation et développement d’algorithmes.</li>
-                <li><strong>Big Data & Cloud ☁️ :</strong> Exploration des technologies comme Spark, Airflow et les bases de données distribuées.</li>
                 <li><strong>Power BI & Tableau 📊 :</strong> Création de dashboards interactifs pour des analyses stratégiques.</li>
                 <li><strong>ETL & Data Pipelines 🔄 :</strong> Conception et automatisation des flux de données.</li>
             </ul>
