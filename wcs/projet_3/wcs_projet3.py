@@ -17,12 +17,6 @@ def afficher_wcs_projet3():
         st.session_state.page_projet2 = page_name  # Modification de la variable pour changer de page
 
 
-
-    # Vérifier si l'utilisateur est connecté avant de configurer la mise en page
-
-    if "authenticated" in st.session_state and st.session_state["authenticated"]:
-        st.set_page_config(page_title="Robot Bistrot", layout="wide")
-
     sql_user = SQL_user()
 
     def main():
