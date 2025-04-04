@@ -6,7 +6,7 @@ from PIL import Image
 from io import BytesIO
 import folium
 from wcs.projet_3.func.mage_local import Mage_local
-#from streamlit_js_eval import get_geolocation  # Décommentez si nécessaire
+from streamlit_js_eval import get_geolocation
 from streamlit_float import *
 import streamlit.components.v1 as components
 import time
@@ -23,7 +23,7 @@ def chatbot():
     # Dès que l'utilisateur est authentifié, forcer l'affichage du chatbot et mettre à jour les clés héritées
     if st.session_state.get("authenticated"):
         st.session_state["current_page"] = "chat"
-    API_KEY = os.getenv('api_google')
+    API_KEY = os.getenv('api')
 
     if st.session_state.page == "chat":
 
@@ -556,23 +556,6 @@ def chatbot():
                 st.markdown('<div class="bottom-right">Merci Léo</div>', unsafe_allow_html=True)
                 time.sleep(2)
                 st.balloons()
-
-        with st.sidebar:
-            val_menu = option_menu(menu_title=None, options=["Robot Bistro", "Tableau de bord", "Déconnexion"],
-                                   icons=['house', 'graph-up-arrow', "box-arrow-left"])
-            if val_menu == "Robot Bistro":
-                set_page("chat")
-            if val_menu == "Tableau de bord":
-                set_page("dash_user")
-                st.rerun()
-            if val_menu == "Déconnexion":
-                for key in st.session_state.keys():
-                    if key not in ["current_page"]:
-                        del st.session_state[key]
-                if "current_page" not in st.session_state:
-                    st.session_state["current_page"] = "Landing"
-                st.rerun()
-
 
 
 
