@@ -344,32 +344,6 @@ def chatbot():
                 st.markdown('<div class="handwritten">Merci d\'avoir choisi Bistro Robot</div>', unsafe_allow_html=True)
                 st.write("")
                 st.markdown('<div class="bonappetit">Bon appétît</div>', unsafe_allow_html=True)
-                st.write("")
-                st.write("")
-                time.sleep(3)
-                st.markdown('<div class="bottom-right">Merci Léo</div>', unsafe_allow_html=True)
-                time.sleep(2)
-                st.balloons()
-
-        with st.sidebar:
-            val_menu = option_menu(menu_title=None, options=["Robot Bistro", "Tableau de bord", "Déconnexion"],
-                                   icons=['house', 'graph-up-arrow', "box-arrow-left"])
-            if val_menu == "Robot Bistro":
-                st.session_state["current_page"] = "chat"
-            if val_menu == "Tableau de bord":
-                st.session_state["current_page"] = "dash_user"
-                st.experimental_rerun()
-            if val_menu == "Déconnexion":
-                keys_to_keep = ["current_page"]
-                keys_to_delete = [key for key in st.session_state.keys() if key not in keys_to_keep]
-                for key in keys_to_delete:
-                    del st.session_state[key]
-                if "current_page" not in st.session_state:
-                    st.session_state["current_page"] = "login"
-                st.experimental_rerun()
-
-    elif st.session_state["current_page"] == "dash_user":
-        dash_user()
 
     st.markdown(
         """
