@@ -51,7 +51,7 @@ def afficher_wcs_projet3():
         st.write("")
         st.write("")
         st.write("")
-        st.image("img/logo_home_search_and_go.png")
+        st.image("wcs/projet_3/img/logo_home_search_and_go.png")
 
         col1, col2 = st.columns(2)
         with col1:
@@ -70,7 +70,7 @@ def afficher_wcs_projet3():
         st.write("")
         st.write("")
         st.write("")
-        st.image("img/logo_home_search_and_go.png")
+        st.image("wcs/projet_3/img/logo_home_search_and_go.png")
         st.title("Créer un compte")
         # Formulaire de création de compte
         with st.form("signup_form"):
@@ -99,7 +99,7 @@ def afficher_wcs_projet3():
         st.write("")
         st.write("")
         st.write("")
-        st.image("img/logo_home_search_and_go.png")
+        st.image("wcs/projet_3/img/logo_home_search_and_go.png")
         st.subheader("Se connecter")
         # Formulaire de connexion
         with st.form("login_form"):

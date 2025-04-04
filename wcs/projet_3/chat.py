@@ -91,7 +91,7 @@ def chatbot():
             # Disposition des colonnes pour l'affichage avec Streamlit
             chat_col, empty_col, img_col = st.columns([1.5, 0.1, 1])
             with img_col:
-                st.image("img/Leonardo_Phoenix_09_a_whimsical_cartoon_illustration_of_a_robo_1.jpg", width=500)  # Ajuste la largeur à 500 pixels
+                st.image("wcs/projet_3/img/Leonardo_Phoenix_09_a_whimsical_cartoon_illustration_of_a_robo_1.jpg", width=500)  # Ajuste la largeur à 500 pixels
             with chat_col:
                 if "user_location" not in st.session_state:
                     st.session_state["user_location"] = ()
@@ -116,8 +116,8 @@ def chatbot():
                 if "messages" not in st.session_state:
                     st.session_state.messages = []
 
-                avatar_bot = "img/icons8-robot-100.png"
-                avatar_user = "img/user.png"
+                avatar_bot = "wcs/projet_3/img/icons8-robot-100.png"
+                avatar_user = "wcs/projet_3/img/user.png"
                 # Affiche le message de bienvenue avec l'avatar du chatbot
                 st.chat_message("assistant", avatar=avatar_bot).write(st.session_state["robot"].get_welcome())
 
@@ -199,7 +199,7 @@ def chatbot():
 
          # Fonction pour récupérer et redimensionner l'image
         def get_resized_image(photo_reference, size=(200, 200)):
-            default_img = Image.open("img/icons8-robot-100.png").resize((200, 200))  # Image par défaut
+            default_img = Image.open("wcs/projet_3/img/icons8-robot-100.png").resize((200, 200))  # Image par défaut
             image_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="
             if not photo_reference:
                 return default_img
