@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 from wcs.projet_3.func.SQL_user import SQL_user
-from chat import chatbot
+from wcs.projet_3.chat import chatbot
 from wcs.projet_3.dash_admin import dash_admin
 from dotenv import load_dotenv
 
