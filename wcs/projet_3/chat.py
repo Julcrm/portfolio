@@ -35,7 +35,6 @@ def chatbot():
             pass
         return default_img
 
-
     if st.session_state.get("authenticated"):
         st.session_state["current_page"] = "chat"
 
