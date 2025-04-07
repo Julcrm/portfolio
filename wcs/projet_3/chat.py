@@ -265,7 +265,7 @@ def chatbot():
                               """)
                     ).add_to(map_folium)
 
-                fig = folium.Figure(height=650, width=700)  # Définit la taille de la carte
+                fig = folium.Figure(height=1000, width=1000)  # Définit la taille de la carte
                 map_folium.add_to(fig)
 
                 # Afficher la carte dans la deuxième colonne
@@ -278,7 +278,7 @@ def chatbot():
                     st.write("")
                     col_empty_1, col_map1, col_empty_2 = st.columns([0.3, 2, 2])
                     with col_map1:
-                        st.components.v1.html(map_folium._repr_html_(), height=650, width=700)
+                        st.components.v1.html(map_folium._repr_html_(), height=1000, width=1000)
             else:
                 st.write("J'ai épluché le net et malgré mes recherches je n'ai trouvé aucune perle à vous proposer")
 
