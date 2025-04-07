@@ -276,7 +276,7 @@ def chatbot():
                     st.write("")
                     st.write("")
                     st.write("")
-                    col_empty_1, col_map1, col_empty_2 = st.columns([0, 7, 0])
+                    col_empty_1, col_map1, col_empty_2 = st.columns([0.1, 7, 0.1])
                     with col_map1:
                         st.components.v1.html(map_folium._repr_html_(), height=1000, width=1000)
             else:
