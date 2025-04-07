@@ -22,9 +22,7 @@ def chatbot():
 
     if st.session_state.get("authenticated"):
         st.session_state["current_page"] = "chat"
-        st.session_state["page_projet3"] = "chat"
-        if st.session_state.get("page") == "wcs_projet3":
-            st.session_state["page"] = "chat"
+
 
     API_KEY = os.getenv('api_google')
 
